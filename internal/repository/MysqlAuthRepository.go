@@ -11,10 +11,9 @@ type MysqlAuthRepository struct {
 	Db *gorm.DB
 }
 
-func (ma *MysqlAuthRepository) Signup(user entity.User) (int64, error) {
+func (ma *MysqlAuthRepository) Signup(user *entity.User) (int64, error) {
 
 	record := ma.Db.Create(user)
-
 	if record.Error != nil {
 		return 0, record.Error
 	}
@@ -22,7 +21,15 @@ func (ma *MysqlAuthRepository) Signup(user entity.User) (int64, error) {
 	return record.RowsAffected, nil
 
 }
+func (ma *MysqlAuthRepository) Login(username, password string) (*entity.User, error) {
 
-func (ma *MysqlAuthRepository) Login() {
+	user := entity.User{
+		Username: username,
+	}
+	data := ma.Db.First(&user)
+	if data.Error != nil {
+		return nil, data.Error
+	}
 
+	return &user, nil
 }

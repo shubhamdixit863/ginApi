@@ -52,7 +52,7 @@ func TestMysqlAuthRepository_Signup(t *testing.T) {
 		Db: MysqlConnect(dsn),
 	}
 
-	data, err := ma.Signup(entity.User{
+	data, err := ma.Signup(&entity.User{
 		Username:  "jon123",
 		Password:  "123456",
 		CreatedAt: time.Now(),
