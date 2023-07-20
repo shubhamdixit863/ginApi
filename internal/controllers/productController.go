@@ -1,10 +1,12 @@
 package controllers
 
 import (
+	"fmt"
 	"ginTraining/internal/services"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"os"
+	"path/filepath"
 )
 
 type ProductController struct {
@@ -14,7 +16,11 @@ type ProductController struct {
 func (pr *ProductController) AddProduct(c *gin.Context) {
 	// form data we will be dealing with
 	// We will upload the file in local directory
+	//fmt.Println("Name", c.PostForm("name"))
+	//fmt.Println(c.PostForm("age"))
 	file, err := c.FormFile("file")
+
+	//fmt.Println(err)
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -25,7 +31,9 @@ func (pr *ProductController) AddProduct(c *gin.Context) {
 	}
 
 	// We will upload it in the local directory
-	uploadPath := "../../uploads"
+	uploadPath := ".././uploads"
+
+	localFilePath := filepath.Join(uploadPath, filepath.Base(file.Filename))
 
 	if _, err := os.Stat(uploadPath); os.IsNotExist(err) {
 		err := os.MkdirAll(uploadPath, os.ModePerm)
@@ -34,7 +42,8 @@ func (pr *ProductController) AddProduct(c *gin.Context) {
 		}
 	}
 
-	err = c.SaveUploadedFile(file, uploadPath)
+	fmt.Println(localFilePath)
+	err = c.SaveUploadedFile(file, localFilePath)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"message": "Failed",
