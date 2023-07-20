@@ -30,7 +30,7 @@ func (as *AuthService) SignupUser(signupRequest dtos.SignupRequest) (string, err
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"username": signupRequest.Username,
 		"nbf":      time.Date(2015, 10, 10, 12, 0, 0, 0, time.UTC).Unix(),
-		"exp":      time.Now().Add(10 * time.Minute),
+		"exp":      time.Now().Add(10 * time.Minute).UnixNano(),
 	})
 
 	log.Println(os.Getenv("JWT_SECRET"))
@@ -61,7 +61,7 @@ func (as *AuthService) LoginUser(loginRequest dtos.LoginRequest) (string, error)
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"username": loginRequest.Username,
 		"nbf":      time.Date(2023, 10, 10, 12, 0, 0, 0, time.UTC).Unix(),
-		"exp":      time.Now().Add(10 * time.Minute),
+		"exp":      time.Now().Add(10 * time.Minute).UnixNano(),
 	})
 
 	tokenString, err := token.SignedString([]byte(os.Getenv("JWT_SECRET")))
