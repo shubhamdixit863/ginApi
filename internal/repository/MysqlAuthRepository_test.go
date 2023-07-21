@@ -41,6 +41,7 @@ func TestInitDb(t *testing.T) {
 	}
 
 	err := ma.Db.AutoMigrate(&entity.User{})
+	err = ma.Db.AutoMigrate(&entity.Product{})
 	assert.Nil(t, err)
 
 }

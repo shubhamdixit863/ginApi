@@ -12,7 +12,14 @@ type MysqlProductRepository struct {
 }
 
 func (my *MysqlProductRepository) AddProduct(product entity.Product) (*entity.Product, error) {
-	return nil, nil
+
+	tx := my.Db.Create(&product)
+
+	if tx.Error != nil {
+		return nil, tx.Error
+	}
+
+	return &product, nil
 }
 func (my *MysqlProductRepository) GetProductById(id int) (*entity.Product, error) {
 	return nil, nil

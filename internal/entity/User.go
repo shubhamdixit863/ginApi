@@ -5,7 +5,7 @@ import (
 )
 
 type User struct {
-	ID        int64 `gorm:"primaryKey,omitempty"`
+	ID        int64 `gorm:"primaryKey,omitempty,auto_increment"`
 	Name      string
 	Age       int
 	Username  string

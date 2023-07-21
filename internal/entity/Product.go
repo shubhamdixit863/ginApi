@@ -6,7 +6,7 @@ import "time"
 
 type Product struct {
 	ID           int64 `gorm:"primaryKey,omitempty"`
-	ProductName  string
+	Name         string
 	ProductImage string
 	Description  string
 	CreatedAt    time.Time

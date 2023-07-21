@@ -10,7 +10,6 @@ import (
 type AuthController struct {
 
 	// Service as a depeendency here
-
 	AuthService *services.AuthService
 }
 
